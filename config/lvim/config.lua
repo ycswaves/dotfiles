@@ -79,8 +79,8 @@ lvim.keys.normal_mode = {
   ["<C-Right>"] = ":vertical resize +2<CR>",
 
    -- Navigate buffers
-   ["<S-Tab>"] = ":BufferPrevious<CR>",
-   ["<Tab>"] = ":BufferNext<CR>",
+   ["<S-Tab>"] = ":BufferLineCyclePrev<CR>",
+   ["<Tab>"] = ":BufferLineCycleNext<CR>",
 
  }
 
