@@ -65,7 +65,8 @@ lvim.builtin.treesitter.ignore_install = { "haskell" }
 lvim.builtin.treesitter.highlight.enabled = true
 
 vim.cmd([[
-  nmap <C-f> :Ag<CR>
+  command! -bang -nargs=* Agi call fzf#vim#ag(<q-args>, '--ignore node_modules', fzf#vim#with_preview())
+  nmap <C-f> :Agi <CR>
   nmap [q :cprevious <CR>
   nmap ]q :cnext <CR>
 ]])
@@ -100,7 +101,7 @@ lvim.builtin.which_key.mappings["o"] = { "<cmd>GBrowse!<cr>", "Git Browse!" }
 lvim.builtin.which_key.mappings["g"]["l"] = { "<cmd>Git blame<cr>", "Git Blame!" }
 lvim.builtin.which_key.mappings["g"]["S"] = { "<cmd>Git<cr>", "Git Status" }
 lvim.builtin.which_key.mappings["dU"] = { "<cmd>lua require('dapui').toggle()<cr>", "DAP UI" }
-lvim.builtin.which_key.mappings["ag"] = { "<cmd>call fzf#vim#ag(expand('<cword>'), fzf#vim#with_preview())<cr>",
+lvim.builtin.which_key.mappings["ag"] = { "<cmd>call fzf#vim#ag(expand('<cword>'), '--ignore node_modules', fzf#vim#with_preview())<cr>",
   "Search under cursor" }
 lvim.builtin.which_key.mappings["wa"] = { "<cmd>:wa<cr>", "Save all" }
 
