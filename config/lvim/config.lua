@@ -2,6 +2,8 @@
 lvim.log.level = "warn"
 lvim.format_on_save = true
 lvim.lsp.diagnostics.virtual_text = false
+-- lvim.colorscheme = "catppuccin"
+-- vim.g.catppuccin_flavour = "mocha"
 lvim.colorscheme = "tokyonight"
 vim.g.tokyonight_style = "night"
 vim.g.fzf_layout = {
@@ -25,8 +27,14 @@ lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
 lvim.builtin.alpha.active = true
 lvim.builtin.alpha.mode = "dashboard"
 lvim.builtin.terminal.active = true
-lvim.builtin.notify.active = true
 lvim.builtin.nvimtree.setup.view.width = 50
+lvim.builtin.autopairs.active = true
+lvim.builtin.telescope = {
+  active = true,
+  defaults = {
+    layout_strategy = "horizontal",
+  },
+}
 
 
 lvim.builtin.project.detection_methods = {
@@ -57,7 +65,7 @@ lvim.builtin.treesitter.ignore_install = { "haskell" }
 lvim.builtin.treesitter.highlight.enabled = true
 
 vim.cmd([[
-  nmap <C-f> :Ag<Space>
+  nmap <C-f> :Ag<CR>
   nmap [q :cprevious <CR>
   nmap ]q :cnext <CR>
 ]])
@@ -69,7 +77,7 @@ lvim.keys.normal_mode = {
   ["<C-j>"] = "<C-w>j",
   ["<C-k>"] = "<C-w>k",
   ["<C-l>"] = "<C-w>l",
-  ["<C-p>"] = ":Telescope git_files<CR>",
+  ["<C-p>"] = ":Telescope find_files<CR>",
 
   -- Resize with arrows
   ["<C-Up>"] = ":resize -2<CR>",
@@ -91,9 +99,9 @@ lvim.builtin.which_key.mappings["b"]["c"] = { "<cmd>b#|bd#<cr>", "Close Buffer" 
 lvim.builtin.which_key.mappings["o"] = { "<cmd>GBrowse!<cr>", "Git Browse!" }
 lvim.builtin.which_key.mappings["g"]["l"] = { "<cmd>Git blame<cr>", "Git Blame!" }
 lvim.builtin.which_key.mappings["g"]["S"] = { "<cmd>Git<cr>", "Git Status" }
-lvim.builtin.which_key.mappings["l"]["o"] = { "<cmd>SymbolsOutline<cr>", "Symbols Outline" }
 lvim.builtin.which_key.mappings["dU"] = { "<cmd>lua require('dapui').toggle()<cr>", "DAP UI" }
-lvim.builtin.which_key.mappings["ag"] = { "<cmd>call fzf#vim#ag(expand('<cword>'), fzf#vim#with_preview())<cr>", "Search under cursor" }
+lvim.builtin.which_key.mappings["ag"] = { "<cmd>call fzf#vim#ag(expand('<cword>'), fzf#vim#with_preview())<cr>",
+  "Search under cursor" }
 lvim.builtin.which_key.mappings["wa"] = { "<cmd>:wa<cr>", "Save all" }
 
 
@@ -101,16 +109,31 @@ local formatters = require "lvim.lsp.null-ls.formatters"
 formatters.setup {
   { exe = "black" },
   { exe = "gofmt" },
+  { exe = "eslint_d" },
   {
     exe = "prettier",
   },
 }
 
+local linters = require "lvim.lsp.null-ls.linters"
+linters.setup {
+  {
+    command = "eslint_d",
+    filetypes = { "typescript", "typescriptreact", "javascript", "javascriptreact", "vue", "svelte" }
+    ---@usage specify which filetypes to enable. By default a providers will attach to all the filetypes it supports.
+  },
+}
+
+local code_actions = require "lvim.lsp.null-ls.code_actions"
+code_actions.setup {
+  {
+    exe = "eslint_d",
+    filetypes = { "typescript", "typescriptreact", "javascript", "javascriptreact", "vue" },
+  },
+}
+
 lvim.plugins = {
-  { "lunarvim/colorschemes" },
-  { "prettier/vim-prettier" },
-  { "marko-cerovac/material.nvim" },
-  { 'yashguptaz/calvera-dark.nvim' },
+  { "catppuccin/nvim", as = "catppuccin" },
   -- {
   --   "sunjon/shade.nvim",
   --   config = function ()
@@ -121,6 +144,7 @@ lvim.plugins = {
   --   end
   -- },
   { "tpope/vim-surround" },
+  -- { "kylechui/nvim-surround" },
   { "tpope/vim-fugitive" },
   -- required by fugitive to :Gbrowse
   { 'tpope/vim-rhubarb' },
@@ -140,31 +164,17 @@ lvim.plugins = {
     end,
   },
   { 'simrat39/symbols-outline.nvim' },
-  { "folke/tokyonight.nvim" },
-  {
-    'lukas-reineke/indent-blankline.nvim',
-    config = function()
-      require("indent_blankline").setup {
-        char = "│",
-        -- let g:indent_blankline_char_list = ['|', '¦', '┆', '┊']
-        filetype_exclude = { "dashboard", "markdown" },
-        buftype_exclude = { "terminal", "nofile" },
-        use_treesitter = true
-      }
-    end,
-  },
   {
     'rmagatti/goto-preview',
   },
   { 'junegunn/fzf' },
   { 'junegunn/fzf.vim' },
-  { 'rcarriga/nvim-dap-ui', requires = { 'mfussenegger/nvim-dap' } },
+  { 'nvim-treesitter/nvim-treesitter-context' },
+  { 'nvim-treesitter/nvim-treesitter-textobjects' },
+  { 'karb94/neoscroll.nvim',
+    require('neoscroll').setup(
+      { mappings = { '<C-u>', '<C-d>', '<C-b>',
+        '<C-y>', '<C-e>', 'zt', 'zz', 'zb' }, }
+    )
+  },
 }
-
--- lvim.builtin.dap.active = true
--- local dap_install = require("dap-install")
--- dap_install.config("go_delve", {})
-
--- require("dapui").setup()
-
-require("lvim.lsp.manager").setup("eslint")
