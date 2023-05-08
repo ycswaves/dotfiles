@@ -1,74 +1,62 @@
+--[[
+ THESE ARE EXAMPLE CONFIGS FEEL FREE TO CHANGE TO WHATEVER YOU WANT
+ `lvim` is the global options object
+]]
+-- vim options
+vim.opt.shiftwidth = 2
+vim.opt.tabstop = 2
+vim.opt.relativenumber = true
+
 -- general
-lvim.log.level = "warn"
-lvim.format_on_save = { timeout = 10000 }
--- lvim.lsp.diagnostics.virtual_text = false
--- lvim.colorscheme = "catppuccin"
--- vim.g.catppuccin_flavour = "mocha"
-lvim.colorscheme = "tokyonight"
-vim.g.tokyonight_style = "night"
+lvim.log.level = "info"
+lvim.format_on_save = {
+  enabled = true,
+  timeout = 10000,
+}
+-- to disable icons and use a minimalist setup, uncomment the following
+-- lvim.use_icons = false
+
+-- keymappings <https://www.lunarvim.org/docs/configuration/keybindings>
+lvim.leader = "space"
+-- add your own keymapping
+lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
+
+-- lvim.keys.normal_mode["<S-l>"] = ":BufferLineCycleNext<CR>"
+-- lvim.keys.normal_mode["<S-h>"] = ":BufferLineCyclePrev<CR>"
+
+-- -- Use which-key to add extra bindings with the leader-key prefix
+-- lvim.builtin.which_key.mappings["W"] = { "<cmd>noautocmd w<cr>", "Save without formatting" }
+-- lvim.builtin.which_key.mappings["P"] = { "<cmd>Telescope projects<CR>", "Projects" }
+
+-- -- Change theme settings
+-- lvim.colorscheme = "tokyonight"
+lvim.colorscheme = "catppuccin"
+vim.g.catppuccin_flavour = "mocha"
+
+lvim.builtin.alpha.active = true
+lvim.builtin.alpha.mode = "dashboard"
+lvim.builtin.terminal.active = true
+lvim.builtin.nvimtree.setup.view.side = "left"
+lvim.builtin.nvimtree.setup.renderer.icons.show.git = false
+vim.diagnostic.config({ virtual_text = false })
+
+-- Automatically install missing parsers when entering buffer
+lvim.builtin.treesitter.auto_install = true
+
 vim.g.fzf_layout = {
   window = {
     width = 0.85,
     height = 0.85
   }
 }
--- vim.o.sessionoptions="blank,buffers,curdir,folds,help,options,tabpages,winsize,resize,winpos,terminal"
-vim.o.sessionoptions = "curdir,folds,help,options,tabpages,winsize,resize,winpos,terminal"
-vim.opt.cmdheight = 1 -- more space in the neovim command line for displaying messages
-vim.opt.relativenumber = true
 
--- keymappings [view all the defaults by pressing <leader>Lk]
-lvim.leader = "space"
--- add your own keymapping
-lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
-
--- TODO: User Config for predefined plugins
--- After changing plugin config exit and reopen LunarVim, Run :PackerInstall :PackerCompile
-lvim.builtin.alpha.active = true
-lvim.builtin.alpha.mode = "dashboard"
-lvim.builtin.terminal.active = true
-lvim.builtin.nvimtree.setup.view.width = 50
-lvim.builtin.autopairs.active = true
-lvim.builtin.telescope = {
-  active = true,
-  defaults = {
-    layout_strategy = "horizontal",
-  },
+lvim.keys.normal_mode = {
+  -- Navigate buffers
+  ["<S-Tab>"] = ":BufferLineCyclePrev<CR>",
+  ["<Tab>"] = ":BufferLineCycleNext<CR>",
+  -- find file
+  ["<C-p>"] = ":Telescope find_files<CR>",
 }
-
-lvim.lsp.null_ls.setup = {
-  log = {
-    level = "info",
-  },
-}
-
-
-lvim.builtin.project.detection_methods = {
-  "pattern",
-  "lsp",
-}
-lvim.builtin.project.patterns = {
-  "package.json",
-  ".git", "_darcs", ".hg", ".bzr", ".svn", "Makefile",
-}
-
--- if you don't want all the parsers change this to a table of the ones you want
-lvim.builtin.treesitter.ensure_installed = {
-  "bash",
-  "c",
-  "javascript",
-  "json",
-  "lua",
-  "python",
-  "typescript",
-  "css",
-  "rust",
-  "java",
-  "yaml",
-}
-
-lvim.builtin.treesitter.ignore_install = { "haskell" }
-lvim.builtin.treesitter.highlight.enabled = true
 
 vim.cmd([[
   command! -bang -nargs=* Agi call fzf#vim#ag(<q-args>, '--ignore node_modules', fzf#vim#with_preview())
@@ -77,38 +65,18 @@ vim.cmd([[
   nmap ]q :cnext <CR>
 ]])
 
-
-lvim.keys.normal_mode = {
-  -- Better window movement
-  ["<C-h>"] = "<C-w>h",
-  ["<C-j>"] = "<C-w>j",
-  ["<C-k>"] = "<C-w>k",
-  ["<C-l>"] = "<C-w>l",
-  ["<C-p>"] = ":Telescope find_files<CR>",
-  -- Resize with arrows
-  ["<C-Up>"] = ":resize -2<CR>",
-  ["<C-Down>"] = ":resize +2<CR>",
-  ["<C-Left>"] = ":vertical resize -2<CR>",
-  ["<C-Right>"] = ":vertical resize +2<CR>",
-  -- Navigate buffers
-  ["<S-Tab>"] = ":BufferLineCyclePrev<CR>",
-  ["<Tab>"] = ":BufferLineCycleNext<CR>",
-}
-
-lvim.builtin.which_key.mappings["*"] = { "<cmd>Telescope grep_string<cr>", "Search string under cursor" }
-lvim.builtin.which_key.mappings["b"]["f"] = { "<cmd>Telescope current_buffer_fuzzy_find<cr>", "Search in current buffer" }
-lvim.builtin.which_key.mappings["b"]["s"] = { "<cmd>Buffers<cr>", "Search Buffers" }
-lvim.builtin.which_key.mappings["b"]["o"] = { "<cmd>%bd|e#|bd#<cr>", "Current Buffer Only" }
-lvim.builtin.which_key.mappings["b"]["c"] = { "<cmd>b#|bd#<cr>", "Close Buffer" }
-lvim.builtin.which_key.mappings["o"] = { "<cmd>GBrowse!<cr>", "Git Browse!" }
-lvim.builtin.which_key.mappings["g"]["l"] = { "<cmd>Git blame<cr>", "Git Blame!" }
-lvim.builtin.which_key.mappings["g"]["S"] = { "<cmd>Git<cr>", "Git Status" }
-lvim.builtin.which_key.mappings["dU"] = { "<cmd>lua require('dapui').toggle()<cr>", "DAP UI" }
 lvim.builtin.which_key.mappings["ag"] = {
   "<cmd>call fzf#vim#ag(expand('<cword>'), '--ignore node_modules', fzf#vim#with_preview())<cr>",
   "Search under cursor" }
 lvim.builtin.which_key.mappings["wa"] = { "<cmd>:wa<cr>", "Save all" }
 lvim.builtin.which_key.mappings["ai"] = { "<cmd>:Copilot panel<cr>", "Copilot" }
+
+lvim.builtin.telescope.defaults.layout_strategy = "horizontal"
+lvim.builtin.telescope.defaults.layout_config.width = 0.8
+lvim.builtin.telescope.defaults.layout_config.height = 0.8
+lvim.builtin.telescope.defaults.layout_config.prompt_position = "top"
+
+
 
 local formatters = require "lvim.lsp.null-ls.formatters"
 formatters.setup {
@@ -119,8 +87,6 @@ formatters.setup {
     exe = "prettierd",
   },
 }
-
-vim.b.copilot_suggestion_hidden = false
 
 local linters = require "lvim.lsp.null-ls.linters"
 linters.setup {
@@ -140,7 +106,7 @@ code_actions.setup {
 }
 
 lvim.plugins = {
-  { "catppuccin/nvim",   as = "catppuccin" },
+  { "catppuccin/nvim",   name = "catppuccin" },
   -- {
   --   "sunjon/shade.nvim",
   --   config = function ()
@@ -217,11 +183,17 @@ lvim.plugins = {
   --     })
   --   end
   -- },
-  -- { 'karb94/neoscroll.nvim',
-  --   require('neoscroll').setup(
-  --     { mappings = { '<C-u>', '<C-d>', '<C-b>',
-  --       '<C-y>', '<C-e>', 'zt', 'zz', 'zb' }, }
-  --   )
-  -- },
+  {
+    'karb94/neoscroll.nvim',
+    config = function()
+      require('neoscroll').setup(
+        {
+          mappings = { '<C-u>', '<C-d>', '<C-b>',
+            '<C-y>', '<C-e>', 'zt', 'zz', 'zb' },
+        }
+
+      )
+    end,
+  },
 }
 require("lvim.lsp.manager").setup("emmet_ls")
