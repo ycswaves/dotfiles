@@ -1,7 +1,8 @@
 local wezterm = require 'wezterm';
 
 return {
-  color_scheme = "Ayu Mirage",
+  -- color_scheme = "Ayu Mirage",
+  color_scheme = "Catppuccin Mocha", -- or Macchiato, Frappe, Latte
   font = wezterm.font(
     { family = "VictorMono NF", weight = "DemiBold" }
   ),

@@ -21,8 +21,6 @@ lvim.leader = "space"
 -- add your own keymapping
 lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
 
--- lvim.keys.normal_mode["<S-l>"] = ":BufferLineCycleNext<CR>"
--- lvim.keys.normal_mode["<S-h>"] = ":BufferLineCyclePrev<CR>"
 
 -- -- Use which-key to add extra bindings with the leader-key prefix
 -- lvim.builtin.which_key.mappings["W"] = { "<cmd>noautocmd w<cr>", "Save without formatting" }
@@ -37,6 +35,7 @@ lvim.builtin.alpha.active = true
 lvim.builtin.alpha.mode = "dashboard"
 lvim.builtin.terminal.active = true
 lvim.builtin.nvimtree.setup.view.side = "left"
+lvim.builtin.nvimtree.setup.view.width = 45
 lvim.builtin.nvimtree.setup.renderer.icons.show.git = false
 vim.diagnostic.config({ virtual_text = false })
 
@@ -68,8 +67,15 @@ vim.cmd([[
 lvim.builtin.which_key.mappings["ag"] = {
   "<cmd>call fzf#vim#ag(expand('<cword>'), '--ignore node_modules', fzf#vim#with_preview())<cr>",
   "Search under cursor" }
-lvim.builtin.which_key.mappings["wa"] = { "<cmd>:wa<cr>", "Save all" }
+lvim.builtin.which_key.mappings["W"] = { "<cmd>:wa<cr>", "Save all" }
 lvim.builtin.which_key.mappings["ai"] = { "<cmd>:Copilot panel<cr>", "Copilot" }
+lvim.builtin.which_key.mappings["b"]["f"] = { "<cmd>Telescope current_buffer_fuzzy_find<cr>", "Search in current buffer" }
+lvim.builtin.which_key.mappings["b"]["s"] = { "<cmd>Buffers<cr>", "Search Buffers" }
+lvim.builtin.which_key.mappings["b"]["o"] = { "<cmd>%bd|e#|bd#<cr>", "Current Buffer Only" }
+lvim.builtin.which_key.mappings["b"]["c"] = { "<cmd>b#|bd#<cr>", "Close Buffer" }
+lvim.builtin.which_key.mappings["o"] = { "<cmd>GBrowse!<cr>", "Git Browse!" }
+lvim.builtin.which_key.mappings["g"]["l"] = { "<cmd>Git blame<cr>", "Git Blame!" }
+lvim.builtin.which_key.mappings["g"]["S"] = { "<cmd>Git<cr>", "Git Status" }
 
 lvim.builtin.telescope.defaults.layout_strategy = "horizontal"
 lvim.builtin.telescope.defaults.layout_config.width = 0.8
@@ -151,38 +157,39 @@ lvim.plugins = {
     event = "InsertEnter",
     config = function()
       require("copilot").setup({
-        -- suggestion = { enabled = false },
-        -- panel = { enabled = false },
-        suggestion = {
-          enabled = true,
-          auto_trigger = true,
-          debounce = 75,
-          keymap = {
-            accept = "<C-l>",
-            accept_word = false,
-            accept_line = false,
-            next = "<ALT-]>",
-            prev = "<ALT-[>",
-            dismiss = "<C-]>",
-          },
+        suggestion = { enabled = false },
+        panel = { enabled = false },
+        -- suggestion = {
+        --   enabled = true,
+        --   auto_trigger = true,
+        --   debounce = 75,
+        --   keymap = {
+        --     accept = "<C-l>",
+        --     accept_word = false,
+        --     accept_line = false,
+        --     next = "<ALT-]>",
+        --     prev = "<ALT-[>",
+        --     dismiss = "<C-]>",
+        --   },
+        -- },
+      })
+    end
+  },
+  {
+    "zbirenbaum/copilot-cmp",
+    after = { "copilot.lua" },
+    config = function()
+      require("copilot_cmp").setup({
+        method = "getCompletionsCycling",
+        formatters = {
+          label = require("copilot_cmp.format").format_label_text,
+          insert_text = require("copilot_cmp.format").format_insert_text,
+          preview = require("copilot_cmp.format").deindent,
         },
       })
     end
   },
-  -- {
-  --   "zbirenbaum/copilot-cmp",
-  --   after = { "copilot.lua" },
-  --   config = function()
-  --     require("copilot_cmp").setup({
-  --       method = "getCompletionsCycling",
-  --       formatters = {
-  --         label = require("copilot_cmp.format").format_label_text,
-  --         insert_text = require("copilot_cmp.format").format_insert_text,
-  --         preview = require("copilot_cmp.format").deindent,
-  --       },
-  --     })
-  --   end
-  -- },
+  { 'christoomey/vim-tmux-navigator' },
   {
     'karb94/neoscroll.nvim',
     config = function()

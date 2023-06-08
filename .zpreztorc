@@ -38,7 +38,9 @@ zstyle ':prezto:load' pmodule \
   'spectrum' \
   'utility' \
   'completion' \
+  'syntax-highlighting' \
   'history-substring-search' \
+  'autosuggestions' \
   'git' \
   'fasd' \
   'prompt'
@@ -90,7 +92,7 @@ zstyle ':prezto:module:editor' key-bindings 'vi'
 #
 
 # Set the query found color.
-# zstyle ':prezto:module:history-substring-search:color' found ''
+zstyle ':prezto:module:history-substring-search:color' found ''
 
 # Set the query not found color.
 # zstyle ':prezto:module:history-substring-search:color' not-found ''
