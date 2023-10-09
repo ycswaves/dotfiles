@@ -167,9 +167,9 @@ lvim.plugins = {
         --     accept = "<C-l>",
         --     accept_word = false,
         --     accept_line = false,
-        --     next = "<ALT-]>",
-        --     prev = "<ALT-[>",
-        --     dismiss = "<C-]>",
+        --     next = "<ALT-l>",
+        --     prev = "<ALT-h>",
+        --     dismiss = "<C-h>",
         --   },
         -- },
       })
@@ -177,19 +177,58 @@ lvim.plugins = {
   },
   {
     "zbirenbaum/copilot-cmp",
-    after = { "copilot.lua" },
     config = function()
-      require("copilot_cmp").setup({
-        method = "getCompletionsCycling",
-        formatters = {
-          label = require("copilot_cmp.format").format_label_text,
-          insert_text = require("copilot_cmp.format").format_insert_text,
-          preview = require("copilot_cmp.format").deindent,
-        },
-      })
+      require("copilot_cmp").setup()
     end
   },
   { 'christoomey/vim-tmux-navigator' },
+  {
+    "folke/flash.nvim",
+    event = "VeryLazy",
+    ---@type Flash.Config
+    opts = {},
+    -- stylua: ignore
+    keys = {
+      -- { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end,       desc = "Flash" },
+      -- { "S", mode = { "n", "o", "x" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
+      { "r", mode = "o", function() require("flash").remote() end, desc = "Remote Flash" },
+      {
+        "R",
+        mode = { "o", "x" },
+        function() require("flash").treesitter_search() end,
+        desc =
+        "Treesitter Search"
+      },
+      {
+        "<c-s>",
+        mode = { "c" },
+        function() require("flash").toggle() end,
+        desc =
+        "Toggle Flash Search"
+      },
+    },
+  },
+  {
+    "mrjones2014/nvim-ts-rainbow",
+  },
+  {
+    "rmagatti/goto-preview",
+    config = function()
+      require('goto-preview').setup {
+        width = 120,             -- Width of the floating window
+        height = 25,             -- Height of the floating window
+        default_mappings = true, -- Bind default mappings
+        debug = false,           -- Print debug information
+        opacity = nil,           -- 0-100 opacity level of the floating window where 100 is fully transparent.
+        post_open_hook = nil     -- A function taking two arguments, a buffer and a window to be ran as a hook.
+        -- You can use "default_mappings = true" setup option
+        -- Or explicitly set keybindings
+        -- vim.cmd("nnoremap gpd <cmd>lua require('goto-preview').goto_preview_definition()<CR>")
+        -- vim.cmd("nnoremap gpi <cmd>lua require('goto-preview').goto_preview_implementation()<CR>")
+        -- vim.cmd("nnoremap gP <cmd>lua require('goto-preview').close_all_win()<CR>")
+      }
+    end
+  },
   {
     'karb94/neoscroll.nvim',
     config = function()
@@ -204,3 +243,28 @@ lvim.plugins = {
   },
 }
 require("lvim.lsp.manager").setup("emmet_ls")
+
+require('lspconfig').tailwindcss.setup {
+  settings = {
+    scss = { validate = false },
+    editor = {
+      quickSuggestions = { strings = true },
+      autoClosingQuotes = 'always',
+    },
+    tailwindCSS = {
+      experimental = {
+        classRegex = {
+          'tw`([^`]*)',          -- tw`...`
+          'tw="([^"]*)',         -- <div tw="..." />
+          'tw={"([^"}]*)',       -- <div tw={"..."} />
+          'tw\\.\\w+`([^`]*)',   -- tw.xxx`...`
+          'tw\\(.*?\\)`([^`]*)', -- tw(Component)`...`
+        },
+      },
+      includeLanguages = {
+        typescript = 'javascript',
+        typescriptreact = 'javascript',
+      },
+    },
+  },
+}
