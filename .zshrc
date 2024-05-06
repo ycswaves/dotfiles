@@ -22,7 +22,10 @@ fi
 
 alias python=python3
 alias lv=lvim
+alias nv=nvim
 alias cat=bat
+alias api_prod='AWS_PROFILE=absec-mgmt ABSEC_ENV=prod ABSEC_CLOUD=aws ABSEC_REGION=us-east-1 ABSEC_PART=management DJANGO_LOG_LEVEL=INFO api_prod'
+
 
 export PATH="$HOME/.local/bin:$HOME/go/bin:$PATH"
 export EDITOR="$HOME/.local/bin/lvim"
@@ -52,3 +55,4 @@ gbde() {
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 source /Users/chenshu/.config/broot/launcher/bash/br
+export PATH="/opt/homebrew/opt/go@1.21/bin:$PATH"
