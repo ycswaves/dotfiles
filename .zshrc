@@ -28,8 +28,10 @@ alias api_prod='AWS_PROFILE=absec-mgmt ABSEC_ENV=prod ABSEC_CLOUD=aws ABSEC_REGI
 
 
 export PATH="$HOME/.local/bin:$HOME/go/bin:$PATH"
-export EDITOR="$HOME/.local/bin/lvim"
-export VISUAL="$HOME/.local/bin/lvim"
+export EDITOR="nvim"
+export VISUAL="nvim"
+# export EDITOR="$HOME/.local/bin/lvim"
+# export VISUAL="$HOME/.local/bin/lvim"
 
 
 
@@ -51,7 +53,12 @@ gbde() {
 
 . $(brew --prefix asdf)/libexec/asdf.sh
 
+export PATH="/opt/homebrew/opt/go@1.21/bin:$PATH"
+
+# Set up fzf key bindings and fuzzy completion
+eval "$(fzf --zsh)"
+
+source /Users/cyi/.config/broot/launcher/bash/br
+
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
-export PATH="/opt/homebrew/opt/go@1.21/bin:$PATH"
