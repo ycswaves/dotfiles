@@ -21,10 +21,10 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
 fi
 
 alias python=python3
-alias lv=lvim
 alias nv=nvim
 alias cat=bat
-alias api_prod='AWS_PROFILE=absec-mgmt ABSEC_ENV=prod ABSEC_CLOUD=aws ABSEC_REGION=us-east-1 ABSEC_PART=management DJANGO_LOG_LEVEL=INFO api_prod'
+alias gcan='git commit --amend --no-edit'
+
 
 
 export PATH="$HOME/.local/bin:$HOME/go/bin:$PATH"
