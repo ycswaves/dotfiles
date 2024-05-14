@@ -58,7 +58,9 @@ export PATH="/opt/homebrew/opt/go@1.21/bin:$PATH"
 # Set up fzf key bindings and fuzzy completion
 eval "$(fzf --zsh)"
 
-source /Users/cyi/.config/broot/launcher/bash/br
+source "$HOME/.config/broot/launcher/bash/br"
+source "$HOME/fzf-git.sh"
+
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
