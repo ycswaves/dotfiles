@@ -16,6 +16,8 @@ brew "fzf"
 brew "git"
 # Syntax-highlighting pager for git and diff output
 brew "git-delta"
+# GNU implementation of the famous stream editor
+brew "gnu-sed"
 # Open source programming language to build simple/reliable/efficient software
 brew "go"
 # Lightweight and flexible command-line JSON processor
@@ -32,6 +34,8 @@ brew "tldr"
 brew "tmux"
 # Internet file retriever
 brew "wget"
+# Display management tool
+cask "betterdisplay"
 # Utility that prevents the system from going to sleep
 cask "caffeine"
 # Monospaced typeface designed to be used where code is represented
@@ -48,6 +52,8 @@ cask "maccy"
 cask "notion"
 # Move and resize windows using keyboard shortcuts or snap areas
 cask "rectangle"
+# Music streaming service
+cask "spotify"
 # Multimedia player
 cask "vlc"
 # GPU-accelerated cross-platform terminal emulator and multiplexer
