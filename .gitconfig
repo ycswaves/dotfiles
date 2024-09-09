@@ -15,7 +15,6 @@
     # delta detects terminal colors automatically; set one of these to disable auto-detection
     # dark = true
     # light = true
-
 [merge]
     conflictstyle = diff3
 
@@ -23,3 +22,8 @@
     colorMoved = default
 [init]
     defaultBranch = main
+[push]
+    autoSetupRemote = true
+
+[includeIf "gitdir:~/work/**"]
+    path = ~/work/.gitconfig

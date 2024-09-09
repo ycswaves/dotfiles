@@ -24,7 +24,8 @@ alias python=python3
 alias nv=nvim
 alias cat=bat
 alias gcan='git commit --amend --no-edit'
-
+alias grcl='git reset --hard && git clean -df'
+alias sshadd='ssh-add --apple-use-keychain ~/.ssh/id_ed25519'
 
 
 export PATH="$HOME/.local/bin:$HOME/go/bin:$PATH"
@@ -54,6 +55,7 @@ gbde() {
 . $(brew --prefix asdf)/libexec/asdf.sh
 
 export PATH="/opt/homebrew/opt/go@1.21/bin:$PATH"
+export PATH=$(brew --prefix openssh)/bin:$PATH
 
 # Set up fzf key bindings and fuzzy completion
 eval "$(fzf --zsh)"
@@ -61,6 +63,7 @@ eval "$(fzf --zsh)"
 source "$HOME/.config/broot/launcher/bash/br"
 source "$HOME/fzf-git.sh"
 
+export GPG_TTY=$(tty)
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
