@@ -17,3 +17,5 @@ vim.keymap.set("n", "<leader>bj", "<Cmd>BufferLinePick<CR>", { desc = "Buffer Pi
 vim.keymap.set("n", "<leader>go", "<cmd>GBrowse!<cr>", { desc = "Git Browse!" })
 vim.keymap.set("n", "<leader>gl", "<cmd>Git blame<cr>", { desc = "Git Blame!" })
 vim.keymap.set("n", "<leader>gS", "<cmd>Git<cr>", { desc = "Git Status" })
+vim.keymap.set("n", "<leader>xj", "<cmd>lua vim.diagnostic.goto_next()<cr>", { desc = "Next Diagnosis" })
+vim.keymap.set("n", "<leader>xk", "<cmd>lua vim.diagnostic.goto_prev()<cr>", { desc = "Prev Diagnosis" })
