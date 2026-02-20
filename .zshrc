@@ -60,7 +60,7 @@ export PATH=$(brew --prefix openssh)/bin:$PATH
 # Set up fzf key bindings and fuzzy completion
 eval "$(fzf --zsh)"
 
-source "$HOME/.config/broot/launcher/bash/br"
+# source "$HOME/.config/broot/launcher/bash/br"
 source "$HOME/fzf-git.sh"
 
 export GPG_TTY=$(tty)

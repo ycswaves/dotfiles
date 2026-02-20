@@ -4,8 +4,6 @@ tap "homebrew/cask-fonts"
 brew "asdf"
 # Clone of cat(1) with syntax highlighting and Git integration
 brew "bat"
-# New way to see and navigate directory trees
-brew "broot"
 # Pack, ship and run any application as a lightweight container
 brew "docker"
 # Simple, fast and user-friendly alternative to find
@@ -52,9 +50,5 @@ cask "maccy"
 cask "notion"
 # Move and resize windows using keyboard shortcuts or snap areas
 cask "rectangle"
-# Music streaming service
-cask "spotify"
 # Multimedia player
 cask "vlc"
-# GPU-accelerated cross-platform terminal emulator and multiplexer
-cask "wezterm"

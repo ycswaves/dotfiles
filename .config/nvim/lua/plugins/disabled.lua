@@ -1,5 +1,4 @@
 return {
-  { "echasnovski/mini.surround", enabled = false },
   {
     "folke/flash.nvim",
     keys = {
